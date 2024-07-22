@@ -1,0 +1,39 @@
+.users-list-item {
+  @apply py-1.5 px-4 flex flex-row justify-between;
+
+  &__left {
+    @apply flex flex-row items-center;
+
+    .avatar {
+      @apply w-8 h-8 mr-3 shrink-0;
+  
+      img {
+        @apply rounded-[50%] border border-neutral-light-100 w-full h-full;
+      }
+    }
+
+    .user-info {
+      @apply text-left h-[100%] flex flex-col justify-center;
+
+      h2 {
+        @apply text-sm font-medium text-main-black leading-none;
+      }
+  
+      p {
+        @apply text-xs text-neutral-dark-100 leading-none;
+      }
+    }
+  }
+
+  &__right {
+    @apply flex flex-row items-center shrink-0;
+
+    p {
+      @apply text-xs leading-none text-neutral-dark-100 mr-2;
+    }
+
+    span {
+      @apply w-6 h-6 rounded-sm flex justify-center items-center bg-neutral-light-40;
+    }
+  }
+}

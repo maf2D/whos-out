@@ -1,0 +1,7 @@
+.users-list {
+  @apply flex flex-col py-2 overflow-x-auto;
+
+  .not-found {
+    @apply flex items-center justify-center font-medium text-main-black leading-none py-4 h-[100%];
+  }
+}

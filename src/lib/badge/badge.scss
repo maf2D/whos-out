@@ -1,0 +1,16 @@
+.badge {
+  @apply
+    inline-flex
+    bg-main-white
+    rounded
+    px-1.5
+    py-[3px]
+    text-[10px]
+    leading-none
+    text-neutral-dark-100
+    font-medium;
+
+  &.dark {
+    @apply bg-neutral-light-30
+  }
+}

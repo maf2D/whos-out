@@ -1,0 +1,19 @@
+.top-panel {
+  @apply border-b border-b-neutral-light-100 px-4 py-2.5;
+
+  .search {
+    @apply mb-2;
+  }
+}
+
+.users-list {
+  @apply h-[324px];
+}
+
+.tabs-list {
+  @apply flex-col xs:flex-row;
+
+  :deep(.tabs-list-item) {
+    @apply mr-0 xs:mr-2;
+  }
+}

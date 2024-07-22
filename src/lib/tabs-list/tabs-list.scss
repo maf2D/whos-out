@@ -1,0 +1,7 @@
+.tabs-list {
+  @apply flex flex-row;
+
+  .tabs-list-item {
+    @apply last:mr-0 mr-2;
+  }
+}
