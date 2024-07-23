@@ -13,7 +13,6 @@ export const api: Api = {
     // base response
     const usersResponse: GetUsersResponse = {
       users,
-
       usersCount: users.length,
       usersOnHolidays: 40,
       usersOnVacation: 40

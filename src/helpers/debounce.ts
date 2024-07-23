@@ -1,13 +1,13 @@
-/* eslint-disable  @typescript-eslint/no-explicit-any */
-
-// helper that executes a cb with some delay
-export const debounce = (
-  cb: (...args: any[]) => void,
+type Debounce = <T extends (...args: any[]) => void>(
+  cb: T,
   delay: number
-) => {
-  let timer: NodeJS.Timeout | null = null;
+) => (...args: Parameters<T>) => void;
 
-  return (...args: any[]) => {
+// helper that returns a fn with a delay
+export const debounce: Debounce = (cb, delay) => {
+  let timer: ReturnType<typeof setTimeout> | null = null;
+
+  return (...args: Parameters<typeof cb>) => {
     if (timer) {
       clearTimeout(timer);
     }

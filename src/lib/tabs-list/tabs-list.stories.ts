@@ -1,6 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { fn } from '@storybook/test';
-import { TABS_LIST_LABELS } from '@/constants/tabs-list-labels';
 import TabsList from './tabs-list.vue';
 
 const meta = {
@@ -9,13 +7,11 @@ const meta = {
   tags: ['autodocs'],
   args: {
     tabs: [
-      { label: TABS_LIST_LABELS.all, badge: 10 },
-      { label: TABS_LIST_LABELS.onVacation, badge: 3 },
-      { label: TABS_LIST_LABELS.onHolidays, badge: 4 }
+      { label: 'All', badge: 10 },
+      { label: 'On Holidays', badge: 3 },
+      { label: 'On Vacation', badge: 4 }
     ],
-    activeTab: TABS_LIST_LABELS.all,
-
-    'onSet-active-tab': fn()
+    activeTab: 'All'
   },
 } satisfies Meta<typeof TabsList>;
 

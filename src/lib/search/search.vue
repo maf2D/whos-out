@@ -17,9 +17,9 @@
 </template>
 
 <script lang='ts' setup>
+  import { ref } from 'vue';
   import { debounce } from '@/helpers/debounce';
   import IconSearch from '@/lib/icons/search/search.vue';
-  import { ref } from 'vue';
 
   withDefaults(defineProps<{
 

@@ -1,20 +1,18 @@
 import { render, fireEvent } from '@testing-library/vue';
-import { TABS_LIST_LABELS } from '@/constants/tabs-list-labels.ts';
-
 import TabsListItem from '@/lib/tabs-list-item/tabs-list-item.vue';
 import TabsList from './tabs-list.vue';
 
 describe('tabs-list.vue', () => {
 
-  // mocked tabs
+  // mock tabs
   const tabs = [
-    { label: TABS_LIST_LABELS.all, badge: 10 },
-    { label: TABS_LIST_LABELS.onVacation, badge: 5 },
-    { label: TABS_LIST_LABELS.onHolidays, badge: 2 }
+    { label: 'All', badge: 10 },
+    { label: 'On Vacation', badge: 5 },
+    { label: 'On Holidays', badge: 3 }
   ];
 
   // helper render component fn
-  const renderComponent = (activeTab = TABS_LIST_LABELS.all) => render(
+  const renderComponent = (activeTab = 'All') => render(
     TabsList,
     {
       props: {
@@ -43,16 +41,16 @@ describe('tabs-list.vue', () => {
   });
 
   it('applies active class to the active tab', () => {
-    const { getByText } = renderComponent(TABS_LIST_LABELS.onVacation);
+    const { getByText } = renderComponent('On Vacation');
 
     // check if active tab has an active class
-    const activeTabElement = getByText(TABS_LIST_LABELS.onVacation)
+    const activeTabElement = getByText('On Vacation')
       .closest('.tabs-list-item');
 
     expect(activeTabElement).toHaveClass('active');
 
     // check if another tab doesn't have an active class
-    const inactiveTabElement = getByText(TABS_LIST_LABELS.all)
+    const inactiveTabElement = getByText('All')
       .closest('.tabs-list-item');
 
     expect(inactiveTabElement).not.toHaveClass('active');
@@ -62,12 +60,12 @@ describe('tabs-list.vue', () => {
     const { getByText, emitted } = renderComponent();
 
     // get on holidays tab and emit it
-    const tabElement = getByText(TABS_LIST_LABELS.onHolidays);
+    const tabElement = getByText('On Holidays');
     await fireEvent.click(tabElement);
 
     // check if emitted tab equals to a clicked tab
     expect(emitted()['set-active-tab']).toBeTruthy();
     expect(emitted()['set-active-tab'][0])
-      .toEqual([TABS_LIST_LABELS.onHolidays]);
+      .toEqual(['On Holidays']);
   });
 });

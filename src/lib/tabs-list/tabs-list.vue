@@ -13,30 +13,29 @@
 </template>
 
 <script lang='ts' setup>
-  import { TABS_LIST_LABELS } from '@/constants/tabs-list-labels';
   import TabsListItem from '@/lib/tabs-list-item/tabs-list-item.vue';
 
-  export type Tab = {
-    label: TABS_LIST_LABELS;
+  export type Tab<T> = {
+    label: T;
     badge: number;
   };
 
   withDefaults(defineProps<{
 
     // tabs
-    tabs: Tab[];
+    tabs: Tab<string>[];
 
     // active tab
-    activeTab: TABS_LIST_LABELS;
+    activeTab: string;
   }>(), {
 
     // default values
     tabs: () => [],
-    activeTab: TABS_LIST_LABELS.all
+    activeTab: ''
   });
 
   defineEmits<{
-    (event: 'set-active-tab', tab: TABS_LIST_LABELS): void;
+    <T>(event: 'set-active-tab', tab: T): void;
   }>();
 </script>
 
