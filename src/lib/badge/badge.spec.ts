@@ -9,7 +9,7 @@ describe('badge.vue', () => {
   // default setup before each test
   beforeEach(() => {
     wrapper = render(Badge, {
-      props: { label: 'Test Label', isDark: true }
+      props: { label: 'Test Label', type: 'light' }
     });
   });
 
@@ -19,7 +19,7 @@ describe('badge.vue', () => {
     expect(wrapper.getByTestId('badge')).toHaveTextContent('Test Label');
   });
 
-  it('applies the dark class when isDark is true', async () => {
+  it('applies the dark class when type is "dark"', async () => {
 
     // check if badge component is rendered with a dark class
     expect(wrapper.getByTestId('badge')).toHaveClass('dark')

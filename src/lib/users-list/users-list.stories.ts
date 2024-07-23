@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { users } from '@/stubs/users.ts'
+import { users } from '@/stubs/users'
 import UsersList from './users-list.vue';
 
 const meta = {

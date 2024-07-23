@@ -1,3 +1,5 @@
+/* eslint @typescript-eslint/no-explicit-any: off */
+
 type Debounce = <T extends (...args: any[]) => void>(
   cb: T,
   delay: number

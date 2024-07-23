@@ -1,17 +1,17 @@
 <template>
   <div class='users-list-item'>
-    <div class='users-list-item__left'>
+    <div class='item-left'>
       <div class='avatar'>
         <img :src='img || defaultImg' :alt='title' />
       </div>
 
-      <div class='user-info'>
+      <div class='info'>
         <h2>{{ title }}</h2>
         <p>{{ subtitle }}</p>
       </div>
     </div>
 
-    <div class='users-list-item__right'>
+    <div class='item-right'>
       <p>{{ `Till ${asideText}` || 'No date' }}</p>
 
       <span>
@@ -27,13 +27,13 @@
 
   withDefaults(defineProps<{
 
-    // user full name
+    // item title
     title: string;
 
-    // user image
+    // item image
     img: string;
 
-    // profession
+    // item subtitle
     subtitle: string;
 
     // away until some date

@@ -1,5 +1,9 @@
 .search-container {
-  @apply px-3 py-1.5 bg-neutral-light-20 flex items-center rounded-md border border-main-transparent;
+  @apply
+    px-3 py-1.5
+    bg-neutral-light-20
+    flex items-center
+    rounded-md border border-main-transparent;
 
   &.focused {
     @apply border border-main-primary shadow-[0_0_0_2px_rgba(0,133,255,0.16),0_1px_4px_0_rgba(9,8,61,0.08);];
@@ -10,9 +14,6 @@
   @apply
     bg-main-transparent
     outline-none
-    text-sm
-    leading-6
-    text-main-black
-    placeholder:text-neutral-dark-80
-    w-full;
+    w-full
+    text-sm leading-6 text-main-black placeholder:text-neutral-dark-80;
 }

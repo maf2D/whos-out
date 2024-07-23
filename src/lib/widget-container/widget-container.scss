@@ -1,19 +1,29 @@
 .widget-container {
-  @apply max-w-[906px] mx-auto border border-neutral-light-100 rounded-md;
+  @apply
+    max-w-[906px] mx-auto
+    border border-neutral-light-100 rounded-md;
 
   .header {
-    @apply flex justify-between items-center px-4 py-3 border-b border-b-neutral-light-100;
+    @apply
+      flex justify-between items-center
+      px-4 py-3
+      border-b border-b-neutral-light-100;
   }
 
   .logo-container {
     @apply flex items-center;
 
     .logo {
-      @apply p-2.5 bg-neutral-light-30 rounded-md;
+      @apply
+        p-2.5
+        bg-neutral-light-30
+        rounded-md;
     }
 
     h1 {
-      @apply ml-2.5 text-sm font-medium;
+      @apply
+        ml-2.5
+        text-sm font-medium;
     }
   }
 

@@ -11,7 +11,7 @@
     <badge
       v-if='badge'
       :label='badge'
-      :is-dark='!isActive'
+      :type='isActive ? "light" : "dark"'
       class='badge'
     />
   </div>
@@ -28,7 +28,7 @@
     // tab type (active or not)
     isActive: boolean;
 
-    // tab badge number
+    // tab badge
     badge?: number | string;
   }>(), {
 

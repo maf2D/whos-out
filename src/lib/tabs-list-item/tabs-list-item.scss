@@ -1,19 +1,17 @@
 .tabs-list-item {
   @apply
-    px-3
-    py-[9px]
-    inline-flex
-    items-center
-    border
-    border-main-transparent
+    px-3 py-[9px]
+    inline-flex items-center justify-center
+    border border-main-transparent
     text-neutral-dark-80
     cursor-pointer
     rounded-md
-    hover:bg-neutral-light-20
-    justify-center;
+    hover:bg-neutral-light-20;
 
   &.active {
-    @apply bg-neutral-light-30 border border-neutral-light-60;
+    @apply
+      bg-neutral-light-30
+      border border-neutral-light-60;
   }
 
   .label {

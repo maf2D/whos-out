@@ -27,7 +27,7 @@
 </template>
 
 <script lang='ts' setup>
-  import type { ComponentPublicInstance } from 'vue';
+  import { ComponentPublicInstance, watch } from 'vue';
   import type { User } from '@/types/api';
 
   import { computed } from 'vue';
@@ -41,18 +41,23 @@
 
     // all the users
     users: User[];
+
+    // scroll to top
+    scrollToTop: boolean;
   }>(), {
 
     // default values
-    users: () => []
+    users: () => [],
+    scrollToTop: false
   });
 
   const emit = defineEmits<{
     (event: 'set-last-user', userRef: UserRef): void;
+    (event: 'set-scroll-to-top', scrollToTop: boolean): void;
   }>();
 
   // composable that shows only n list items in the view port
-  const { list, containerProps, wrapperProps } = useVirtualList(
+  const { list, containerProps, wrapperProps, scrollTo } = useVirtualList(
     computed(() => props.users),
     { itemHeight: 44, }
   );
@@ -61,6 +66,19 @@
   const setLastUser = debounce((userRef: UserRef) => {
     emit('set-last-user', userRef);
   }, 100);
+
+  // scroll to top if prop was changed
+  watch(() => props.scrollToTop, (updatedScrollToTop) => {
+
+    if (updatedScrollToTop) {
+
+      // scroll to top
+      scrollTo(0);
+
+      // reset scrollToTop ref
+      emit('set-scroll-to-top', false);
+    }
+  });
 </script>
 
 <style lang='scss' scoped>

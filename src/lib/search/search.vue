@@ -3,28 +3,31 @@
     <icon-search class='mr-2' />
 
     <input
-      autofocus
       data-testid='search-input'
       class='search-input'
       type='text'
       :placeholder='placeholder'
       :value='modelValue'
       @input='onInput'
-      @focus='focused = true'
-      @blur='focused = false'
+      @focus='$emit("set-focused", true)'
+      @blur='$emit("set-focused", false)'
+      ref='input'
     />
   </div>
 </template>
 
 <script lang='ts' setup>
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   import { debounce } from '@/helpers/debounce';
   import IconSearch from '@/lib/icons/search/search.vue';
 
-  withDefaults(defineProps<{
+  const props = withDefaults(defineProps<{
 
     // model value
     modelValue: string;
+
+    // input focus
+    focused: boolean;
 
     // input placeholder
     placeholder?: string;
@@ -32,7 +35,8 @@
 
     // default values
     modelValue: '',
-    placeholder: 'Search...'
+    placeholder: 'Search...',
+    focused: false
   });
 
   const emit = defineEmits<{
@@ -40,10 +44,17 @@
     (event: 'set-focused', value: boolean): void;
   }>();
 
-  // if search is focused
-  const focused = ref(true);
+  // input ref
+  const input = ref<HTMLElement | null>(null);
 
-  // input handler with a debounce fn
+  // focus input when focused is set to true
+  watch(() => props.focused, (updatedFocused) => {
+    if (updatedFocused) {
+      input.value?.focus();
+    }
+  });
+
+  // input handler
   const onInput = debounce((event: Event) => {
 
     // update model value

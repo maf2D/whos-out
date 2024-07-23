@@ -22,7 +22,7 @@
 
   withDefaults(defineProps<{
 
-    // tabs
+    // all the tabs
     tabs: Tab<string>[];
 
     // active tab

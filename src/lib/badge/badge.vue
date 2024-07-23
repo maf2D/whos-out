@@ -2,27 +2,25 @@
   <div
     class='badge'
     data-testid='badge'
-    :class='{ dark: isDark }'
+    :class='{ dark: type === "dark" }'
   >
     {{ label }}
   </div>
 </template>
 
 <script lang='ts' setup>
-
-  // props
   withDefaults(defineProps<{
 
-    // badge number
+    // badge label
     label: number | string;
 
     // is badge active
-    isDark?: boolean;
+    type: 'dark' | 'light';
   }>(), {
 
     // default values
     label: '',
-    isDark: true
+    type: 'light'
   });
 </script>
 

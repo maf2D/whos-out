@@ -1,9 +1,10 @@
 import type { GetUsersParams, User } from '@/types/api';
+import type { MaybeElement } from '@vueuse/core';
 import type { WidgetParams }
   from '@/components/whos-out-widget/whos-out-widget.vue';
 
 import { computed, onMounted, onUnmounted, reactive, watch } from 'vue';
-import { MaybeElement, useIntersectionObserver } from '@vueuse/core';
+import { useIntersectionObserver } from '@vueuse/core';
 import { api } from '@/api/api';
 
 type UsersState = {
@@ -37,7 +38,7 @@ export const useUsers = (widgetParams: WidgetParams) => {
     // intersection cb
     async ([{ isIntersecting }]) => {
 
-      // if intersecting and not all users are fetched
+      // if intersecting and all users are not fetched
       if (isIntersecting && !users.allFetched) {
         await getUsers({
           skip: users.data.length,
@@ -58,7 +59,10 @@ export const useUsers = (widgetParams: WidgetParams) => {
   // watcher that updates users when search str or tab was changed
   watch(
     [() => widgetParams.searchStr, () => widgetParams.activeTab],
-    async ([updatedStr, updatedTab]) => {
+    async ([updatedStr, updatedTab], [,oldTab]) => {
+
+      // scroll to top
+      widgetParams.scrollToTop = true;
 
       // fetch users
       await getUsers({
@@ -66,6 +70,11 @@ export const useUsers = (widgetParams: WidgetParams) => {
         onHolidays: updatedTab === 'On Holidays',
         onVacation: updatedTab === 'On Vacation'
       });
+
+      // set focus to input if tab was changed
+      if (updatedTab !== oldTab) {
+        widgetParams.focused = true;
+      }
     }
   );
 
@@ -79,7 +88,7 @@ export const useUsers = (widgetParams: WidgetParams) => {
       // fetch users
       const response = await api.getUsers(params);
 
-      // if there are no more users in the api
+      // check if there are no more users in the api
       users.allFetched = response.users.length === 0;
 
       // based on the skip param set users

@@ -7,13 +7,13 @@ const meta = {
   tags: ['autodocs'],
   args: {
     label: '100',
-    isDark: false
+    type: 'light'
   }
 } satisfies Meta<typeof Badge>;
 
 type Story = StoryObj<typeof meta>;
 
 export const Light: Story = {};
-export const Dark: Story = { args: { isDark: true } };
+export const Dark: Story = { args: { type: 'dark' } };
 
 export default meta;

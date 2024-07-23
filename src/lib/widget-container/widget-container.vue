@@ -25,10 +25,6 @@
   import X from '@/lib/icons/x/x.vue';
   import IconLogo from '@/lib/icons/logo/logo.vue';
 
-  defineEmits<{
-    (event: 'close'): void;
-  }>();
-
   withDefaults(defineProps<{
 
     // widget text
@@ -38,8 +34,12 @@
     // default values
     text: ''
   });
+
+  defineEmits<{
+    (event: 'close'): void;
+  }>();
 </script>
 
 <style lang='scss' scoped>
-  @import './widget-container';
+  @import 'widget-container';
 </style>
