@@ -57,12 +57,9 @@
     error: null
   });
 
-  const emit = defineEmits<{
-    (event: 'set-skip', value: number): void;
-  }>();
-
   // last user in the list
   const lastItem = ref(null);
+  const isLastItemIntersected = ref(false);
 
   // composable that shows only n list items in the view port
   const { list, containerProps, wrapperProps, scrollTo } = useVirtualList(
@@ -70,7 +67,7 @@
     { itemHeight: 44 }
   );
 
-  // update skip value when intersecting last item
+  // update isLastItemIntersected when intersecting last item
   const { stop } = useIntersectionObserver(
 
     // target
@@ -79,7 +76,7 @@
     // intersection cb
     ([{ isIntersecting }]) => {
       if (isIntersecting) {
-        emit('set-skip', props.users.length);
+        isLastItemIntersected.value = true;
       }
     }
   );
@@ -87,7 +84,12 @@
   // disable observer when unmounted
   onUnmounted(() => stop());
 
-  defineExpose({ scrollToTop: () => scrollTo(0) })
+  defineExpose({
+    isLastItemIntersected,
+
+    resetIsLastItemIntersected: () => isLastItemIntersected.value = false,
+    scrollToTop: () => scrollTo(0)
+  });
 </script>
 
 <style lang='scss' scoped>

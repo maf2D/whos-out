@@ -85,6 +85,16 @@
       widgetState.skip = 0;
     }
   );
+
+  // watcher that updates skip variable when intersecting last item
+  watch(() => usersListRef.value?.isLastItemIntersected, () => {
+
+    // update skip to fetch new users
+    widgetState.skip = users.value?.length || 0;
+
+    // reset last user item
+    usersListRef.value && usersListRef.value.resetIsLastItemIntersected();
+  });
 </script>
 
 <style lang='scss' scoped>
