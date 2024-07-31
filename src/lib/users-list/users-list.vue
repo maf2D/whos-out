@@ -12,7 +12,7 @@
           :title='`${item.data.firstName} ${item.data.lastName}`'
           :subtitle='item.data.position'
           aside-text='16 july'
-          :ref='item.index === users.length - 1 ? "lastItem" : undefined'
+          :ref='item.index === users.length - 1 ? "lastItemRef" : undefined'
           :key='item.data.id'
         />
       </div>
@@ -58,7 +58,7 @@
   });
 
   // last user in the list
-  const lastItem = ref(null);
+  const lastItemRef = ref<HTMLElement | null>(null);
   const isLastItemIntersected = ref(false);
 
   // composable that shows only n list items in the view port
@@ -71,7 +71,7 @@
   const { stop } = useIntersectionObserver(
 
     // target
-    lastItem,
+    lastItemRef,
 
     // intersection cb
     ([{ isIntersecting }]) => {
