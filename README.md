@@ -21,7 +21,12 @@ To get started, clone the repository create an .env file based on .env.example f
 ```sh
 git clone https://github.com/maf2D/whos-out.git
 cd whos-out
-npm install
+npm run install
+```
+
+To use mocked server:
+```sh
+npm run server
 ```
 
 ## Scripts
@@ -40,4 +45,6 @@ Here are the scripts available in this project:
 
 `npm run storybook`: Runs the storybook server.
 
-`npm build-storybook`: Builds the storybook for production. 
+`npm build-storybook`: Builds the storybook for production.
+
+`npm run server`: Starts the mocked api server. 

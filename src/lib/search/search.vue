@@ -9,25 +9,22 @@
       :placeholder='placeholder'
       :value='modelValue'
       @input='onInput'
-      @focus='$emit("set-focused", true)'
-      @blur='$emit("set-focused", false)'
+      @focus='focused = true'
+      @blur='focused = false'
       ref='input'
     />
   </div>
 </template>
 
 <script lang='ts' setup>
-  import { ref, watch } from 'vue';
-  import { debounce } from '@/helpers/debounce';
+  import { ref } from 'vue';
+  import { useDebounceFn } from '@vueuse/core';
   import IconSearch from '@/lib/icons/search/search.vue';
 
-  const props = withDefaults(defineProps<{
+  withDefaults(defineProps<{
 
     // model value
     modelValue: string;
-
-    // input focus
-    focused: boolean;
 
     // input placeholder
     placeholder?: string;
@@ -35,31 +32,23 @@
 
     // default values
     modelValue: '',
-    placeholder: 'Search...',
-    focused: false
+    placeholder: 'Search...'
   });
 
   const emit = defineEmits<{
     (event: 'update:modelValue', value: string): void;
-    (event: 'set-focused', value: boolean): void;
   }>();
 
-  // input ref
+  // refs
   const input = ref<HTMLElement | null>(null);
-
-  // focus input when focused is set to true
-  watch(() => props.focused, (updatedFocused) => {
-    if (updatedFocused) {
-      input.value?.focus();
-    }
-  });
+  const focused = ref(false)
 
   // input handler
-  const onInput = debounce((event: Event) => {
-
-    // update model value
+  const onInput = useDebounceFn((event: Event) => {
     emit('update:modelValue', (event.target as HTMLInputElement).value);
   }, 500);
+
+  defineExpose({ focusSearch: () => input.value?.focus() });
 </script>
 
 <style lang='scss' scoped>

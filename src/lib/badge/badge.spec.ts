@@ -21,16 +21,10 @@ describe('badge.vue', () => {
 
   it('applies the dark class when type is "dark"', async () => {
 
+    // rerender the component
+    await wrapper.rerender({ type: 'dark' });
+
     // check if badge component is rendered with a dark class
     expect(wrapper.getByTestId('badge')).toHaveClass('dark')
-  });
-
-  it('don\'t applies the dark class when isDark is false', async () => {
-
-    // rerender the component
-    await wrapper.rerender({ isDark: false });
-
-    // check if badge doesn't have a dark class
-    expect(wrapper.getByTestId('badge')).not.toHaveClass('dark');
   });
 });

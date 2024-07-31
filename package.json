@@ -10,9 +10,11 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "vitest",
-    "lint": "eslint"
+    "lint": "eslint",
+    "server": "node server/server.js"
   },
   "dependencies": {
+    "express": "^4.19.2",
     "vue": "^3.4.31"
   },
   "devDependencies": {

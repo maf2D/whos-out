@@ -1,21 +1,21 @@
-export type Api = {
-  getUsers: (params: GetUsersParams) => Promise<GetUsersResponse>;
-};
-
-export type GetUsersParams = Partial<{
+export type GetUsersParams = {
   str: string;
   limit: number;
   skip: number;
   onHolidays: boolean;
   onVacation: boolean;
-}>;
+};
 
 export type GetUsersResponse = {
-  users: User[];
+  status: number;
 
-  usersCount: number;
-  usersOnHolidays: number;
-  usersOnVacation: number;
+  data: {
+    users: User[];
+
+    usersCount: number;
+    usersOnHolidays: number;
+    usersOnVacation: number;
+  };
 };
 
 export type User = {

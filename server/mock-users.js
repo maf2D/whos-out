@@ -1,12 +1,12 @@
-import type { User } from '@/types/api';
-import { randomNumber } from '@/helpers/random-number';
-
 // mock data
 const userNames = ['Den', 'Vlad', 'Alex', 'Sergey'];
 const userPosition = ['Front-end', 'Back-end', 'QA', 'Manager'];
 
-export const createUsers = (n: number = 200): User[] => {
-  const users: User[] = [];
+const randomNumber = (number) =>
+  Math.floor(Math.random() * number);
+
+export const createUsers = (n) => {
+  const users = [];
 
   // create n users
   for (let i = 0; i < n; i++) {
@@ -15,7 +15,7 @@ export const createUsers = (n: number = 200): User[] => {
     const onHolidays = !!randomNumber(2);
     const onVacation = onHolidays ? false : !!randomNumber(2);
 
-    const newUser: User = {
+    const newUser = {
       id: i,
       firstName: userNames[randomNumber(userNames.length)],
       lastName: userNames[randomNumber(userNames.length)],
@@ -29,5 +29,3 @@ export const createUsers = (n: number = 200): User[] => {
 
   return users;
 };
-
-export const users = createUsers();

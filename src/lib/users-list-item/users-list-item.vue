@@ -2,7 +2,7 @@
   <div class='users-list-item'>
     <div class='item-left'>
       <div class='avatar'>
-        <img :src='img || defaultImg' :alt='title' />
+        <img :src='img' :alt='title' />
       </div>
 
       <div class='info'>
@@ -23,7 +23,6 @@
 
 <script lang='ts' setup>
   import IconPlane from '@/lib/icons/plane/plane.vue';
-  import defaultImg from '@/assets/user-stub.png';
 
   withDefaults(defineProps<{
 
@@ -34,10 +33,10 @@
     img: string;
 
     // item subtitle
-    subtitle: string;
+    subtitle?: string;
 
     // away until some date
-    asideText: string;
+    asideText?: string;
   }>(), {
 
     // default values

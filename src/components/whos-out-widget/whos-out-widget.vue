@@ -3,33 +3,32 @@
     <div class='top-panel'>
       <search
         class='search'
-        v-model='widgetParams.searchStr'
-        :focused='widgetParams.focused'
-        @set-focused='setFocused'
+        v-model='widgetState.searchStr'
+        ref='searchRef'
       />
 
       <tabs-list
         :tabs='tabs'
-        :active-tab='widgetParams.activeTab'
-        @set-active-tab='setActiveTab'
+        :active-tab='widgetState.activeTab'
+        @set-active-tab='(tab: string) => widgetState.activeTab = tab'
       />
     </div>
 
     <users-list
       class='users-list'
-      :users='users.data'
-      :scroll-to-top='widgetParams.scrollToTop'
-      @set-last-user='setLastUser'
-      @set-scroll-to-top='setScrollToTop'
+      :users='users'
+      :loading='isFetching'
+      :error='error'
+      @set-skip='(skip: number) => widgetState.skip = skip'
+      ref='usersListRef'
     />
   </widget-container>
 </template>
 
 <script lang='ts' setup>
-  import type { Tab as UsersListTab } from '@/lib/tabs-list/tabs-list.vue';
-  import type { UserRef } from '@/lib/users-list/users-list.vue';
+  import type { Tab } from '@/lib/tabs-list/tabs-list.vue';
 
-  import { computed, reactive } from 'vue';
+  import { computed, reactive, ref, toRefs, watch } from 'vue';
   import { useUsers } from '@/composables/use-users';
 
   import WidgetContainer from '@/lib/widget-container/widget-container.vue';
@@ -37,64 +36,55 @@
   import TabsList from '@/lib/tabs-list/tabs-list.vue';
   import UsersList from '@/lib/users-list/users-list.vue';
 
-  export type Tab = 'All' | 'On Vacation' | 'On Holidays';
-
-  export type WidgetParams = {
-
-    // input search str
+  export type WidgetState = {
     searchStr: string;
-
-    // active tab
-    activeTab: Tab;
-
-    // last user in the users list
-    lastUser: UserRef;
-
-    // scroll to top in the tab
-    scrollToTop: boolean;
-
-    // is input focused
-    focused: boolean;
+    activeTab: string;
+    skip: number;
   };
 
-  // widget params that are tracked by the composable
-  const widgetParams = reactive<WidgetParams>({
-
-    // watchable params
+  const widgetState = reactive<WidgetState>({
     searchStr: '',
     activeTab: 'All',
-    lastUser: null,
-
-    // additional params
-    scrollToTop: false,
-    focused: false
+    skip: 0
   });
 
-  // composable that returns up-to-date users based on passed params
-  const { users } = useUsers(widgetParams);
+  // components refs
+  const usersListRef = ref<InstanceType<typeof UsersList> | null>(null);
+  const searchRef = ref<InstanceType<typeof Search> | null>(null);
+
+  // up-to-date users
+  const {
+    users,
+    isFetching,
+    error,
+
+    allUsersCount,
+    usersOnVacationCount,
+    usersOnHolidaysCount
+  } = useUsers(toRefs(widgetState));
 
   // users list tabs
-  const tabs = computed<UsersListTab<Tab>[]>(() => [
-    { label: 'All', badge: users.total },
-    { label: 'On Vacation', badge: users.onVacation },
-    { label: 'On Holidays', badge: users.onHolidays }
+  const tabs = computed<Tab[]>(() => [
+    { label: 'All', badge: allUsersCount.value },
+    { label: 'On Vacation', badge: usersOnVacationCount.value },
+    { label: 'On Holidays', badge: usersOnHolidaysCount.value }
   ]);
 
-  const setActiveTab = (tab: Tab) => {
-    widgetParams.activeTab = tab;
-  };
+  // watcher that resets widget when tab or search was changed
+  watch(
+    [() => widgetState.searchStr, () => widgetState.activeTab],
+    () => {
 
-  const setLastUser = (userRef: UserRef) => {
-    widgetParams.lastUser = userRef;
-  };
+      // scroll to top
+      usersListRef.value && usersListRef.value.scrollToTop();
 
-  const setScrollToTop = (scrollToTop: boolean) => {
-    widgetParams.scrollToTop = scrollToTop;
-  };
+      // focus the input
+      searchRef.value && searchRef.value.focusSearch();
 
-  const setFocused = (focused: boolean) => {
-    widgetParams.focused = focused;
-  };
+      // reset skip users value
+      widgetState.skip = 0;
+    }
+  );
 </script>
 
 <style lang='scss' scoped>

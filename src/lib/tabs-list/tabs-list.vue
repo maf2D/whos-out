@@ -15,23 +15,22 @@
 <script lang='ts' setup>
   import TabsListItem from '@/lib/tabs-list-item/tabs-list-item.vue';
 
-  export type Tab<T> = {
-    label: T;
-    badge: number;
+  export type Tab = {
+    label: string;
+    badge?: number | string;
   };
 
   withDefaults(defineProps<{
 
     // all the tabs
-    tabs: Tab<string>[];
+    tabs: Tab[];
 
     // active tab
     activeTab: string;
   }>(), {
 
     // default values
-    tabs: () => [],
-    activeTab: ''
+    tabs: () => []
   });
 
   defineEmits<{

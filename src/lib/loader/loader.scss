@@ -1,0 +1,12 @@
+.loader-container {
+  @apply
+    flex justify-center items-center;
+}
+
+.loader {
+  @apply
+    w-12
+    aspect-square
+    rounded-full border-4 border-neutral-dark-60 border-t-main-transparent
+    animate-spin;
+}

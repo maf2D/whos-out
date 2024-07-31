@@ -1,10 +1,19 @@
 .users-list {
   @apply
     flex flex-col
-    overflow-x-auto;
+    overflow-x-auto
+    relative;
 
   .virtual-list {
     @apply py-2;
+  }
+
+  .loader-container {
+    @apply
+      h-full
+      flex items-center justify-center
+      absolute top-0 left-0 right-0 bottom-0
+      bg-main-black opacity-5;
   }
 
   .not-found {
